@@ -1,13 +1,10 @@
-from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.views.generic import FormView, TemplateView
+
 from web_project import TemplateLayout
 from web_project.template_helpers.theme import TemplateHelper
-
-
-"""
-This file is a view controller for multiple pages as a module.
-Here you can override the page view layout.
-Refer to auth/urls.py file for more pages.
-"""
+from .forms import UserRegistrationForm
 
 
 class AuthView(TemplateView):
@@ -24,3 +21,25 @@ class AuthView(TemplateView):
         )
 
         return context
+
+
+class UserLoginView(LoginView):
+    template_name = "auth_login_basic.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return TemplateLayout.init(self, context)
+
+
+class UserRegisterView(FormView):
+    template_name = "auth_register_basic.html"
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy("auth-login-basic")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return TemplateLayout.init(self, context)
