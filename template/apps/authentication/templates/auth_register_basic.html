@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="{% static  'vendor/css/pages/page-auth.css' %}">
 {% endblock page_css %}
 
-
 {% block content %}
 <div class="position-relative">
   <div class="authentication-wrapper authentication-basic container-p-y">
@@ -30,36 +29,10 @@
           <h4 class="mb-1">Adventure starts here 🚀</h4>
           <p class="mb-5">Make your app management easy and fun!</p>
 
-          <form id="formAuthentication" class="mb-5" action="{% url 'index' %}">
-           {% csrf_token %}
-            <div class="form-floating form-floating-outline mb-5">
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus>
-              <label for="username">Username</label>
-            </div>
-            <div class="form-floating form-floating-outline mb-5">
-              <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
-              <label for="email">Email</label>
-            </div>
-            <div class="mb-5 form-password-toggle">
-              <div class="input-group input-group-merge">
-                <div class="form-floating form-floating-outline">
-                  <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                  <label for="password">Password</label>
-                </div>
-                <span class="input-group-text cursor-pointer"><i class="ri-eye-off-line ri-20px"></i></span>
-              </div>
-            </div>
-
-            <div class="mb-5 py-2">
-              <div class="form-check mb-0">
-                <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
-                <label class="form-check-label" for="terms-conditions">
-                  I agree to
-                  <a href="javascript:void(0);">privacy policy & terms</a>
-                </label>
-              </div>
-            </div>
-            <button class="btn btn-primary d-grid w-100 mb-5">
+          <form method="post" class="mb-5">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary d-grid w-100 mb-5" type="submit">
               Sign up
             </button>
           </form>
